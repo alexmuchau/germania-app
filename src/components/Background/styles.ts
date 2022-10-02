@@ -8,9 +8,12 @@ export const styles = StyleSheet.create({
     backgroundColor: THEME.COLORS.BACKGROUND,
   },
   logo: {
-    marginTop: 64,
+    marginTop: 90,
   },
   userIcon: {
-    
+    flexDirection: "row",
+    justifyContent: 'center',
+    alignItems: "center",
+    marginTop: 12
   }
 })

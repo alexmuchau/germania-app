@@ -20,13 +20,14 @@ export const THEME = {
   },
 
   RALEWAY_FAMILY: {
+    MEDIUM: 'Raleway_500Medium',
     BOLD: 'Raleway_700Bold',
     BLACK: 'Raleway_900Black'
   },
 
   INTER_FAMILY: {
-    BOLD: "Inter_500Medium",
-    BLACK: "Inter_700Bold"
+    MEDIUM: "Inter_500Medium",
+    BOLD: "Inter_700Bold"
   },
 
   FONT_SIZE: {

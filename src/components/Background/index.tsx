@@ -21,8 +21,8 @@ export function Background({ children }: Props) {
         style={styles.logo}
         source={logo}
       />
-      <TouchableOpacity style={styles.userIcon}>
-        <User size={12}/>
+      <TouchableOpacity style={styles.userIcon} >
+        <User size={24}/>
         <CaretDown size={12}/>
       </TouchableOpacity>
       {children}
