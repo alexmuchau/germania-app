@@ -9,6 +9,8 @@ export const styles = StyleSheet.create({
   },
   logo: {
     marginTop: 90,
+    maxWidth: 177,
+    maxHeight: 53,
   },
   userIcon: {
     flexDirection: "row",

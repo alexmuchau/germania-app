@@ -1,21 +1,59 @@
-import { View, Text } from 'react-native'
-import { styles } from '../../home/styles'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 
-export function OrderListItem() {
+import { Circle, Check } from 'phosphor-react-native'
+import { styles } from './styles'
+
+export interface Order {
+  id: string
+  products: { name: string, count: Number }[],
+  table: Number,
+  hour: String,
+  waiter: String,
+  command: Number,
+  checked: Boolean
+}
+
+interface OrderProps {
+  data: Order,
+  handleCheckOrder: (id: string) => void,
+}
+
+export function OrderListItem({data, handleCheckOrder}: OrderProps) {
+  function toggleCheck(id: string) {
+    handleCheckOrder(id)
+  }
+  
   return(
     <View style={styles.container} >
       <View>
-        <View>
-          <Text>1x - Chopp Pilsen 500ml</Text>
-          <Text>Mesa 02</Text>
+        <View style={styles.orderTitle}>
+          <FlatList
+            contentContainerStyle={styles.products}
+            data={data.products}
+            keyExtractor={item => item.name}
+            renderItem={({item}) => (
+              <Text>{item.count.toString()}x - {item.name}</Text>
+            )}
+          />
+          <Text style={styles.orderTable}> • Mesa {data.table.toString()}</Text>
         </View>
-        <View>
-          <Text>21:32</Text>
-          <Text>Bruno</Text>
-          <Text>Comanda 11</Text>
+        <View style={styles.orderSubTitle}>
+          <Text style={styles.orderHour}>{data.hour}</Text>
+          <Text style={styles.orderWaiter}> • {data.waiter}</Text>
+          <Text style={styles.orderCommand}> • Comanda {data.command.toString()}</Text>
         </View>
       </View>
-      
+      <TouchableOpacity
+        onPress={() => toggleCheck(data.id)}
+      >
+        { data.checked ? (
+          <Circle style={styles.uncheckButton} size={20}/>
+        ) : (
+          <View style={styles.checkButton}>
+            <Check size={16} weight='bold'/>
+          </View>
+        )}
+      </TouchableOpacity>
     </View>
   )
 }

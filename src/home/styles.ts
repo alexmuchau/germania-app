@@ -39,9 +39,14 @@ export const styles = StyleSheet.create({
   labelText: {
     color: THEME.COLORS.TEXT_ZINC_600,
     fontFamily: THEME.RALEWAY_FAMILY.MEDIUM,
+    fontSize: THEME.FONT_SIZE.SSM
   },
   countLabelText: {
     color: THEME.COLORS.BRAND_500,
     fontFamily: THEME.INTER_FAMILY.MEDIUM,
+    fontSize: THEME.FONT_SIZE.SSM
+  },
+  checkedOrdersList: {
+    opacity: 0.8,
   }
 })
