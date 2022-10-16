@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Portions {
+  id           String         @id @default(uuid())
+  name         String
+  type         String
+  OrderPortion OrderPortion[]
+}
+
+model Chopps {
+  id         String       @id @default(uuid())
+  name       String
+  type       String
+  OrderChopp OrderChopp[]
+}
+
+model Users {
+  id     String   @id @default(uuid())
+  name   String
+  orders Orders[]
+}
+
+model Orders {
+  id           String         @id @default(uuid())
+  waiterId     String
+  OrderChopp   OrderChopp[]
+  OrderPortion OrderPortion[]
+
+  waiter Users @relation(fields: [waiterId], references: [id])
+}
+
+model OrderChopp {
+  OrderId  String
+  ChoppId  String
+  Quantity Int
+
+  Order  Orders @relation(fields: [OrderId], references: [id], onDelete: Cascade)
+  Chopps Chopps @relation(fields: [ChoppId], references: [id])
+
+  @@id([OrderId, ChoppId])
+}
+
+model OrderPortion {
+  OrderId   String
+  PortionId String
+  Quantity  Int
+
+  Order    Orders   @relation(fields: [OrderId], references: [id], onDelete: Cascade)
+  Portions Portions @relation(fields: [PortionId], references: [id])
+
+  @@id([OrderId, PortionId])
+}
