@@ -66,7 +66,7 @@ export function Home() {
   return(
     <View style={styles.container} >
       <View style={styles.actionButtons} >
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.createButton}
         >
           <Plus size={32}/>
@@ -86,7 +86,6 @@ export function Home() {
         <Text style={styles.countLabelText}>{uncheckedOrderList.length < 10 ? ('0' + `${uncheckedOrderList.length}`) : uncheckedOrderList.length}</Text>
       </View>
       <FlatList
-        // contentContainerStyle={styles.contentList}
         data={uncheckedOrderList}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
@@ -102,7 +101,6 @@ export function Home() {
         <Text style={styles.countLabelText}>{checkedOrderList.length < 10 ? ('0' + `${checkedOrderList.length}`) : checkedOrderList.length}</Text>
       </View>
       <FlatList
-
         contentContainerStyle={styles.checkedOrdersList}
         data={checkedOrderList}
         keyExtractor={item => item.id}
