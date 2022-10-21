@@ -2,16 +2,7 @@ import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 
 import { Circle, Check } from 'phosphor-react-native'
 import { styles } from './styles'
-
-export interface Order {
-  id: string
-  products: { name: string, count: Number }[],
-  table: Number,
-  hour: String,
-  waiter: String,
-  command: Number,
-  checked: Boolean
-}
+import { Order } from '../../@types/types'
 
 interface OrderProps {
   data: Order,
@@ -22,7 +13,7 @@ export function OrderListItem({data, handleCheckOrder}: OrderProps) {
   function toggleCheck(id: string) {
     handleCheckOrder(id)
   }
-  
+
   return(
     <View style={styles.container} >
       <View>
@@ -30,15 +21,15 @@ export function OrderListItem({data, handleCheckOrder}: OrderProps) {
           <FlatList
             contentContainerStyle={styles.products}
             data={data.products}
-            keyExtractor={item => item.name}
+            keyExtractor={item => item.id}
             renderItem={({item}) => (
-              <Text>{item.count.toString()}x - {item.name}</Text>
+              <Text>{item.quantity.toString()}x - {item.name}</Text>
             )}
           />
           <Text style={styles.orderTable}> • Mesa {data.table.toString()}</Text>
         </View>
         <View style={styles.orderSubTitle}>
-          <Text style={styles.orderHour}>{data.hour}</Text>
+          <Text style={styles.orderHour}>{data.createHour}</Text>
           <Text style={styles.orderWaiter}> • {data.waiter}</Text>
           <Text style={styles.orderCommand}> • Comanda {data.command.toString()}</Text>
         </View>
@@ -46,7 +37,7 @@ export function OrderListItem({data, handleCheckOrder}: OrderProps) {
       <TouchableOpacity
         onPress={() => toggleCheck(data.id)}
       >
-        { data.checked ? (
+        { data.checked === false ? (
           <Circle style={styles.uncheckButton} size={20}/>
         ) : (
           <View style={styles.checkButton}>
@@ -54,6 +45,7 @@ export function OrderListItem({data, handleCheckOrder}: OrderProps) {
           </View>
         )}
       </TouchableOpacity>
+      
     </View>
   )
 }
