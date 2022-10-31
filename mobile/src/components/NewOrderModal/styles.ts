@@ -31,28 +31,62 @@ export const styles = StyleSheet.create({
   },
   tableButton: {
     flex: 1,
-    borderRadius: 4,
+    borderRadius: 8,
     marginRight: 5,
     alignItems: "center",
 
     backgroundColor: THEME.COLORS.TEXT_ZINC_50,
     paddingHorizontal: 8,
-    paddingTop: 8,
+    paddingTop: 12,
     paddingBottom: 12
   },
   commandButton: {
     flex: 1,
-    borderRadius: 4,
+    borderRadius: 8,
     alignItems: "center",
     marginLeft: 5,
 
     backgroundColor: THEME.COLORS.TEXT_ZINC_50,
     paddingHorizontal: 8,
-    paddingTop: 8,
+    paddingTop: 12,
     paddingBottom: 12
   },
-  tableCommandTitle: {},
-  tableCommandIcon: {},
-  choppsPortionsButton: {},
-  choppsPortionsTitle: {},
+  tableCommandTitle: {
+    fontFamily: THEME.RALEWAY_FAMILY.BLACK,
+    fontSize: THEME.FONT_SIZE.SM,
+  },
+  tableCommandInput: {
+    color: THEME.COLORS.BRAND_600,
+    fontSize: THEME.FONT_SIZE.LG,
+    fontFamily: THEME.INTER_FAMILY.BLACK
+  },
+  choppsPortionsButton: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+    paddingHorizontal: 24,
+    maxHeight: 50,
+    borderRadius: 8,
+    marginTop: 12,
+
+    backgroundColor: THEME.COLORS.TEXT_ZINC_50,
+  },
+  choppsPortionsTitle: {
+    fontSize: THEME.FONT_SIZE.LG,
+    fontFamily: THEME.RALEWAY_FAMILY.BLACK,
+  },
+  itemListContainer: {
+    width: '100%',
+    height: '100%',
+
+    alignItems: 'flex-start',
+    marginTop: 20,
+  },
+  itemListTitle: {
+    color: THEME.COLORS.BRAND_200,
+    fontSize: THEME.FONT_SIZE.SSM,
+    fontFamily: THEME.RALEWAY_FAMILY.BOLD
+  }
 })
