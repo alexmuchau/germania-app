@@ -27,7 +27,8 @@ export const THEME = {
 
   INTER_FAMILY: {
     MEDIUM: "Inter_500Medium",
-    BOLD: "Inter_700Bold"
+    BOLD: "Inter_700Bold",
+    BLACK: "Inter_900Black"
   },
 
   FONT_SIZE: {

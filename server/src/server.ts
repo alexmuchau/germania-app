@@ -60,8 +60,33 @@ app.get('/portions', async (req, res) => {
 app.get('/orders', async (req, res) => {
   const orders = await prisma.orders.findMany({
     include: {
-      OrderChopp: true,
-      OrderPortion: true,
+      OrderChopp: {
+        include: {
+          Chopps: {
+            select: {
+              name: true,
+              type: true
+            }
+          },
+        },
+        
+      },
+      OrderPortion: {
+        include: {
+          Portions: {
+            select: {
+              name: true,
+              type: true,
+            }
+          },
+        },
+        
+      },
+      waiter: {
+        select: {
+          name: true
+        }
+      }
     }
   })
 
@@ -69,9 +94,10 @@ app.get('/orders', async (req, res) => {
 })
 
 app.post('/orders', async (req, res) => {
-  // const body = req.body
+  const body = req.body
   const chopps = req.body.chopps
   const portions = req.body.portions
+  const hour = `${new Date().getHours()}:${new Date().getMinutes()}`
 
   if(portions.length === 0 && chopps.length === 0) {
     return res.status(406).send('need one chopp or one portion')
@@ -79,12 +105,13 @@ app.post('/orders', async (req, res) => {
 
   let order = await prisma.orders.create({
     data: {
-      waiterId: '7a310ec9-3c36-48f8-a258-71c3c9d58d64'
+      waiterId: '7a310ec9-3c36-48f8-a258-71c3c9d58d64',
+      command: body.command,
+      table: body.table,
+      createHour: hour
     }
   })
   
-  let response = [order]
-
   if(chopps.length > 0) {
     const choppsOrder = chopps
       .map((value: ChoppOrder) => `("${order.id}", "${value.choppId}", ${value.quantity})`)
@@ -94,7 +121,6 @@ app.post('/orders', async (req, res) => {
     
     await prisma.$executeRawUnsafe(`INSERT INTO \`main\`.\`OrderChopp\` (OrderId, ChoppId, Quantity) VALUES \n\t${choppsOrder};`)
     
-    response.push(choppsOrder)
   }
 
   if(portions.length > 0) {
@@ -105,9 +131,9 @@ app.post('/orders', async (req, res) => {
     await prisma.$executeRawUnsafe(`INSERT INTO \`main\`.\`OrderPortion\` (OrderId, portionId, Quantity) VALUES \n\t${portionsOrder};`)
   }
 
-  
+  // const response = {...order, chopps: chopps, portions: portions}
 
-  return res.status(201).json(response)
+  return res.status(201).json(order)
 })
 
 app.delete('/orders/:id', async (req, res) => {
@@ -118,6 +144,12 @@ app.delete('/orders/:id', async (req, res) => {
       id: orderId,
     }
   })
+
+  return res.status(201).send('delete successfully')
+})
+
+app.delete('/orders/', async (req, res) => {
+  const deletedUsers = await prisma.orders.deleteMany({})
 
   return res.status(201).send('delete successfully')
 })

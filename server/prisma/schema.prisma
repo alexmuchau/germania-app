@@ -33,6 +33,9 @@ model Users {
 model Orders {
   id           String         @id @default(uuid())
   waiterId     String
+  table        Int            @default(0)
+  command      Int            @default(0)
+  createHour   String         @default("00:01")
   OrderChopp   OrderChopp[]
   OrderPortion OrderPortion[]
 
