@@ -39,15 +39,16 @@ export interface Order {
   products: { id: string ,name: string, quantity: Number }[],
 }
 
-export interface Portion {
-  id: string,
-  name: string,
-  type: string,
+export interface Chopps {
+	[title: string]: {
+		id: string,
+		weight: string
+	}[]
 }
 
-export interface Chopp {
-  id: string,
-  name: String,
-  type: string,
+export interface Portions {
+	[title: string]: {
+		id: string,
+		type: string
+	}[]
 }
-
