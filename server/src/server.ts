@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
-import { ChoppOrder, PortionOrder } from './types/types'
+import { ChoppOrder, Chopps, PortionOrder, Portions } from './types/types'
 
 const app = express()
 
@@ -13,15 +13,33 @@ const prisma = new PrismaClient({
 })
 
 app.get('/chopps', async (req, res) => {
-  const chopps = await prisma.chopps.findMany({
-    select: {
-      id: true,
-      name: true,
-      type: true
-    },
+  const rawChopps = await prisma.chopps.groupBy({
+    by: ['id', 'name', 'type'],
     orderBy: {
       name: 'asc'
     }
+  })
+
+  const choppTitles = await prisma.chopps.groupBy({
+    by: ['name'],
+    orderBy: {
+      name: 'asc'
+    }
+  })
+
+  let chopps = choppTitles.map(title => {
+    return {[title.name]: <Chopps[]>[]}
+  })
+
+  rawChopps.forEach(rawChopp => {
+    chopps.forEach(chopp => {
+      if(rawChopp.name === Object.keys(chopp)[0]) {
+        chopp[rawChopp.name].push({
+          id: rawChopp.id,
+          weight: rawChopp.type
+        })
+      }
+    })
   })
 
   return res.json(chopps)
@@ -43,15 +61,33 @@ app.post('/chopps', async (req, res) => {
 })
 
 app.get('/portions', async (req, res) => {
-  const portions = await prisma.portions.findMany({
-    select: {
-      id: true,
-      name: true,
-      type: true
-    },
+  const rawPortions = await prisma.portions.groupBy({
+    by: ['id', 'name', 'type'],
     orderBy: {
       name: 'asc'
     }
+  })
+
+  const portionTitles = await prisma.portions.groupBy({
+    by: ['name'],
+    orderBy: {
+      name: 'asc'
+    }
+  })
+
+  let portions = portionTitles.map(title => {
+    return {[title.name]: <Portions[]>[]}
+  })
+
+  rawPortions.forEach(rawPortion => {
+    portions.forEach(portion => {
+      if(rawPortion.name === Object.keys(portion)[0]) {
+        portion[rawPortion.name].push({
+          id: rawPortion.id,
+          type: rawPortion.type
+        })
+      }
+    })
   })
 
   return res.json(portions)

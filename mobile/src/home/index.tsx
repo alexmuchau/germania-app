@@ -14,7 +14,7 @@ export function Home() {
   const [ newOrderModalVisible, setNewOrderModalVisible ] = useState(false)
   
   useEffect(() => {
-    fetch('http://192.168.0.50:3333/orders')
+    fetch('http://192.168.100.108:3333/orders')
     .then(response => response.json())
     .then(data => setOrders(data.map((rawOrder: RawOrder) => {
       const products = rawOrder.OrderChopp.map(chopp => {
