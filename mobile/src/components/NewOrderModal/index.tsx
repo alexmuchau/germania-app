@@ -82,7 +82,8 @@ export function NewOrderModal({closeModal , ...rest }: NewOrderModalProps) {
               <CaretDown size={28}/>
             </TouchableOpacity>
 
-            <ChoppsModal 
+            <ChoppsModal
+              handleOpenChoppsModal={handleOpenChoppsModal}
               visible={isChoppsModalOpen}
             />
 
